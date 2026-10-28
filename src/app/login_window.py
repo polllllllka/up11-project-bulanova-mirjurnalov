@@ -21,14 +21,10 @@ class LoginWindow(QWidget):
             QWidget { background-color: #FFFFFF; font-family: Calibri; }
             QLabel { font-size: 14px; color: #000000; }
             QLineEdit { font-size: 14px; padding: 5px; border: 1px solid #ccc; }
-            QPushButton { 
-                background-color: #70B2AF; color: #000000; 
-                font-weight: bold; padding: 8px; border-radius: 4px; font-size: 14px; 
-            }
+            QPushButton { background-color: #70B2AF; color: #000000; font-weight: bold; padding: 8px; border-radius: 4px; font-size: 14px; }
         """)
         
         layout = QVBoxLayout(self)
-        
         title = QLabel("Вход в систему")
         title.setStyleSheet("font-size: 18px; font-weight: bold;")
         title.setAlignment(Qt.AlignCenter)
@@ -53,19 +49,13 @@ class LoginWindow(QWidget):
         if not login:
             QMessageBox.warning(self, "Ошибка", "Введите логин!")
             return
-            
         user_data = self.db.check_login(login)
-        
         if not user_data:
             QMessageBox.warning(self, "Ошибка", "Пользователь не найден!")
             return
-            
         user_id, role_id, last_name, first_name, middle_name, role_name = user_data
-        
         full_name = f"{last_name} {first_name}"
-        if middle_name:
-            full_name += f" {middle_name}"
-            
+        if middle_name: full_name += f" {middle_name}"
         self.open_main_window(role_id, role_name, full_name, user_id)
 
     def login_as_guest(self):
